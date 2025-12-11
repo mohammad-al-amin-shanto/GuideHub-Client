@@ -1,8 +1,5 @@
 import "./globals.css";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import ClientShell from "../components/ClientShell";
 
 export const metadata = {
   title: "Local Guide Platform",
@@ -17,10 +14,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        <main className="min-h-[70vh]">{children}</main>
-        <Footer />
-        <ToastContainer position="top-right" />
+        {/* ClientShell handles Navbar, Footer, ToastContainer on the client */}
+        <ClientShell>
+          <main className="min-h-[70vh]">{children}</main>
+        </ClientShell>
       </body>
     </html>
   );
