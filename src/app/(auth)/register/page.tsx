@@ -1,9 +1,8 @@
 "use client";
 import { useState } from "react";
-
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import API from "@/src/lib/api";
+import API from "@/lib/api"; // adjust if needed
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -33,9 +32,14 @@ export default function RegisterPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <h2 className="text-2xl font-semibold mb-4">Create an account</h2>
-      <form onSubmit={submit} className="max-w-md space-y-3">
+      <form
+        onSubmit={submit}
+        className="max-w-md space-y-3"
+        aria-label="Register form"
+      >
         <input
           required
+          name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Full name"
@@ -43,6 +47,8 @@ export default function RegisterPage() {
         />
         <input
           required
+          name="email"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
@@ -50,31 +56,39 @@ export default function RegisterPage() {
         />
         <input
           required
+          name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
           placeholder="Password"
           className="w-full p-2 border rounded"
         />
-        <div className="flex gap-2">
-          <label>
+        <div className="flex gap-4 items-center">
+          <label className="flex items-center gap-2">
             <input
               checked={role === "tourist"}
               onChange={() => setRole("tourist")}
               type="radio"
-            />{" "}
-            Tourist
+              name="role"
+              value="tourist"
+            />
+            <span>Tourist</span>
           </label>
-          <label>
+          <label className="flex items-center gap-2">
             <input
               checked={role === "guide"}
               onChange={() => setRole("guide")}
               type="radio"
-            />{" "}
-            Guide
+              name="role"
+              value="guide"
+            />
+            <span>Guide</span>
           </label>
         </div>
-        <button className="bg-indigo-600 text-white px-4 py-2 rounded">
+        <button
+          type="submit"
+          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+        >
           Register
         </button>
       </form>
