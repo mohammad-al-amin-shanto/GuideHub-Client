@@ -1,9 +1,19 @@
 "use client";
 import { useState } from "react";
-import API from "@/lib/api"; // ensure path matches your project
+import axios from "axios";
+import API from "@/src/lib/api";
 import { toast } from "react-toastify";
 
 type Props = { listingId: string; price?: number };
+
+function getApiErrorMessage(data: unknown): string | undefined {
+  if (typeof data === "object" && data !== null) {
+    const d = data as Record<string, unknown>;
+    const m = d["message"];
+    if (typeof m === "string") return m;
+  }
+  return undefined;
+}
 
 export default function BookingWidget({ listingId, price = 20 }: Props) {
   const [date, setDate] = useState("");
@@ -17,8 +27,15 @@ export default function BookingWidget({ listingId, price = 20 }: Props) {
     try {
       await API.post("/bookings", { listingId, date, people });
       toast.success("Booking requested. Awaiting guide confirmation.");
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message || "Booking failed");
+    } catch (err: unknown) {
+      let msg = "Booking failed";
+      if (axios.isAxiosError(err)) {
+        const serverMsg = getApiErrorMessage(err.response?.data);
+        msg = serverMsg ?? err.message ?? msg;
+      } else if (err instanceof Error) {
+        msg = err.message;
+      }
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
