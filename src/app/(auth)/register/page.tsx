@@ -2,7 +2,17 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import API from "@/lib/api"; // adjust if needed
+import axios from "axios";
+import API from "@/src/lib/api";
+
+function getApiErrorMessage(data: unknown): string | undefined {
+  if (typeof data === "object" && data !== null) {
+    const d = data as Record<string, unknown>;
+    const m = d["message"];
+    if (typeof m === "string") return m;
+  }
+  return undefined;
+}
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -23,8 +33,14 @@ export default function RegisterPage() {
       localStorage.setItem("lg_token", data.token);
       toast.success("Welcome! Registration successful.");
       router.push("/dashboard");
-    } catch (err: any) {
-      const msg = err?.response?.data?.message || "Registration failed";
+    } catch (err: unknown) {
+      let msg = "Registration failed";
+      if (axios.isAxiosError(err)) {
+        const serverMsg = getApiErrorMessage(err.response?.data);
+        msg = serverMsg ?? err.message ?? msg;
+      } else if (err instanceof Error) {
+        msg = err.message;
+      }
       toast.error(msg);
     }
   }
