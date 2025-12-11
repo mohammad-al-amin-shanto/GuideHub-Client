@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
   id: string;
@@ -22,9 +23,11 @@ export default function ProfileCard({
       className="block border rounded-lg p-4 hover:shadow"
     >
       <div className="flex items-center gap-4">
-        <img
+        <Image
           src={img}
           alt={name}
+          width={64}
+          height={64}
           className="w-16 h-16 rounded-full object-cover"
         />
         <div>
