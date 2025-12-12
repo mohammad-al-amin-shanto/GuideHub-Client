@@ -11,7 +11,7 @@ const cats = [
 export default function Categories() {
   return (
     <div className="py-6">
-      <h2 className="text-2xl font-semibold mb-4">Categories</h2>
+      <h2 className="text-3xl font-bold mb-4">Categories</h2>
       <div className="flex flex-wrap gap-3">
         {cats.map((c) => (
           <Link

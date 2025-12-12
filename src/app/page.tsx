@@ -7,7 +7,7 @@ import Testimonials from "../components/Testimonials";
 
 export default function Home() {
   return (
-    <div className="space-y-20">
+    <div className="space-y-8">
       <section id="hero" className="pt-12">
         <HeroSearch />
       </section>

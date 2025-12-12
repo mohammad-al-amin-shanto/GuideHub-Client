@@ -1,12 +1,13 @@
-@tailwind base;
-@tailwind components;
+@import "tailwindcss";
 @tailwind utilities;
 
+/* Your app styles */
 html,
 body,
 #__next {
   height: 100%;
 }
+
 body {
   background: #f7fafc;
 }
