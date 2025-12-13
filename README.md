@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GuideHub (Frontend)
+GuideHub Frontend is the client-side application for the GuideHub platform — a modern marketplace where travelers can discover, book, and interact with professional guides across the world.
+This frontend is built with Next.js, emphasizes clean UI/UX, and integrates tightly with the backend services of the platform.
 
-## Getting Started
+---
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Modern Next.js App Router structure
+- Responsive UI optimized for both desktop and mobile
+- Authentication System using AuthContext + JWT
+- Dynamic Guide Listings with search & filter
+- Booking System with live API interactions
+- Role-based Views (User / Guide / Admin)
+- Reusable UI components following a consistent design system
+- API integration layer with centralized request handling
+- Toast notifications & error handling baked in
+
+---
+
+## 📁 Project Structure
+```
+src/
+ ┣ components/        # Reusable UI components
+ ┣ context/           # AuthProvider, global state
+ ┣ app/               # Next.js App Router pages
+ ┃ ┣ (auth)/          # Login/Register layouts
+ ┃ ┣ dashboard/       # User & guide dashboards
+ ┣ hooks/             # Custom React hooks
+ ┣ lib/               # API helper, utilities
+ ┣ styles/            # Global styles
+ ┗ types/             # TypeScript definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Getting Started
+### 1. Clone the repository
+```
+git clone https://github.com/your-repo/guidehub-frontend.git
+cd guidehub-frontend
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Install dependencies
+```
+npm install
+```
 
-## Learn More
+### 3. Create environment variables
+Create a .env.local file:
+```
+NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
+NEXT_PUBLIC_APP_NAME=GuideHub
+```
+(Adjust according to deployment environment.)
 
-To learn more about Next.js, take a look at the following resources:
+--- 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🏃 Running the Project
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Development
+```
+npm run dev
+```
+App will be live at:
+```
+http://localhost:3000
+```
+Production Build
+```
+npm run build
+npm start
+```
+---
 
-## Deploy on Vercel
+### 🔗 API Integration
+All API requests use the helper in:
+```
+src/lib/api.ts
+```
+- Centralized Axios instance
+- Automatic JWT handling
+- Typed responses
+- Unified error formatting
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🧰 Technology Stack
+| Category | Tools |
+|----------|--------|
+| Framework |	Next.js (App Router) |
+| Language | TypeScript |
+| UI | TailwindCSS, Custom Components |
+| State |	React Context, Custom Hooks |
+| Auth | JWT-based |
+| API |	Axios |
+| Deployment | Vercel / Any Node-Compatible Hosting |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🧪 Quality & Best Practices
+
+- ES Lint + Prettier formatting
+- Modular folder structure
+- Strong TypeScript usage
+- Reusable, accessible UI
+- Clear separation of concerns
+
+### 📦 Deployment
+
+The project is optimized for deployment on Vercel, but also works with:
+- Netlify
+- Docker containers
+- Custom Node servers
+Adjust environment variables as needed.
+
+### 🤝 Contributing
+Contributions are welcome!
+Please open an issue or submit a pull request following the standard workflow:
+
+- Fork the repo
+- Create a feature branch
+- Commit your changes
+- Open a PR
+
+### 📄 License
+This project is licensed under the MIT License.
+
+### 🏁 Author
+Mohammad Al Amin
