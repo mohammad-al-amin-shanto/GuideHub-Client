@@ -3,6 +3,7 @@
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import API from "@/lib/api";
 
 type FormState = {
   email: string;
@@ -49,25 +50,11 @@ export default function LoginPage() {
     try {
       setLoading(true);
       const base = process.env.NEXT_PUBLIC_API_URL || "";
-      const res = await fetch(`${base}/api/auth/login`, {
-        method: "POST",
-        credentials: "include", // important: include cookies
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: form.email,
-          password: form.password,
-          remember: form.remember,
-        }),
+      await API.post("/api/auth/login", {
+        email: form.email,
+        password: form.password,
+        remember: form.remember,
       });
-
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(
-          (data && (data.message || data.error)) ||
-            "Login failed — please check your credentials."
-        );
-        return;
-      }
 
       // 🚀 NEW: Immediately refresh auth state
       await refresh(); // <— THIS FIXES NAVBAR NOT UPDATING

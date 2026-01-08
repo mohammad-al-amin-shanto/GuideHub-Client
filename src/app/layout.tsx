@@ -1,6 +1,6 @@
 import "./globals.css";
-import ClientShell from "../components/ClientShell";
 import { AuthProvider } from "../context/AuthContext";
+import ClientShell from "@/components/ClientShell";
 
 export const metadata = {
   title: "Local Guide Platform",
@@ -15,12 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Wrap the entire app with AuthProvider */}
         <AuthProvider>
-          {/* ClientShell handles Navbar, Footer, Toasts */}
-          <ClientShell>
-            <main className="min-h-[70vh]">{children}</main>
-          </ClientShell>
+          <ClientShell>{children}</ClientShell>
         </AuthProvider>
       </body>
     </html>

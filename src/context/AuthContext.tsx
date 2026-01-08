@@ -7,6 +7,7 @@ import {
   useState,
   useCallback,
 } from "react";
+import API from "@/lib/api";
 
 export type AppUser = {
   id: string;
@@ -39,7 +40,7 @@ function toAppUser(obj: unknown): AppUser | null {
 
   const raw = obj as Record<string, unknown>;
 
-  const id = (raw.id as string) || (raw._id as string); // 🔥 backend sends _id → normalize it
+  const id = (raw.id as string) || (raw._id as string);
 
   const name = raw.name as string;
   const email = raw.email as string;
@@ -85,26 +86,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refresh = useCallback(async () => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`,
-        { credentials: "include" }
-      );
+      const res = await API.get("/api/auth/me");
 
-      if (!res.ok) {
-        setUser(null);
-        setLoading(false);
-        return;
-      }
-
-      const data = await res.json();
-      console.log("AUTH RAW /me:", data);
-
-      const parsed = normalizeUser(data);
-      console.log("AUTH PARSED USER:", parsed);
-
+      const parsed = normalizeUser(res.data);
       setUser(parsed ?? null);
-    } catch (err) {
-      console.error("Auth refresh error:", err);
+    } catch {
       setUser(null);
     } finally {
       setLoading(false);
@@ -113,10 +99,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = useCallback(async () => {
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
+      await API.post("/api/auth/logout");
     } catch (err) {
       console.error("Logout failed:", err);
     } finally {
