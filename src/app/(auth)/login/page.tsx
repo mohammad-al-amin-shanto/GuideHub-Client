@@ -49,7 +49,6 @@ export default function LoginPage() {
 
     try {
       setLoading(true);
-      const base = process.env.NEXT_PUBLIC_API_URL || "";
       await API.post("/api/auth/login", {
         email: form.email,
         password: form.password,
