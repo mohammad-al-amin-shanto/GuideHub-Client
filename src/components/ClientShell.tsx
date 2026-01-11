@@ -14,7 +14,7 @@ export default function ClientShell({
   return (
     <>
       <Navbar />
-      {children}
+      <main className="pt-16 min-h-screen">{children}</main>
       <Footer />
       <ToastContainer position="top-right" />
     </>

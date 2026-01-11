@@ -1,94 +1,105 @@
-export default function Page() {
+export default function CareersPage() {
   return (
-    <div className="relative overflow-hidden">
-      {/* Soft background glow */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-emerald-100/30 via-transparent to-sky-100/40" />
+    <div className="relative overflow-hidden bg-white">
+      {/* Background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-indigo-50 via-white to-sky-50" />
 
-      <div className="container mx-auto px-4 py-20">
-        {/* Hero */}
-        <div className="max-w-3xl">
-          <span className="inline-block mb-4 rounded-full bg-black/5 px-4 py-1 text-sm font-medium text-gray-700">
+      <div className="container mx-auto px-4 py-24">
+        {/* HERO */}
+        <section className="max-w-3xl">
+          <span className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-4 py-1 text-sm font-medium text-indigo-700">
             Careers at GuideHub
           </span>
 
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 mb-6">
-            Build products that help people explore the world better
+          <h1 className="mt-6 text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
+            Build tools that help people explore the world better
           </h1>
 
-          <p className="text-lg text-gray-600 leading-relaxed">
-            We’re building GuideHub with curiosity, craftsmanship, and care. If
-            you enjoy solving meaningful problems and creating thoughtful user
-            experiences, you’ll feel right at home here.
+          <p className="mt-6 text-lg leading-relaxed text-gray-600">
+            GuideHub is built with intention — clean design, thoughtful
+            engineering, and a strong focus on real human experiences. If you
+            enjoy solving meaningful problems and shipping quality work, you’ll
+            fit right in.
           </p>
-        </div>
+        </section>
 
-        {/* Divider */}
-        <div className="my-16 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+        {/* DIVIDER */}
+        <div className="my-20 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
 
-        {/* Culture */}
-        <div className="grid gap-12 md:grid-cols-3">
-          <div>
-            <h3 className="text-xl font-semibold mb-3 text-gray-900">
-              🧠 How we think
-            </h3>
-            <p className="text-gray-600 leading-relaxed">
-              We value clarity over complexity. Decisions are guided by user
-              needs, long-term thinking, and clean engineering — not hype or
-              shortcuts.
-            </p>
-          </div>
+        {/* CULTURE */}
+        <section className="grid gap-10 md:grid-cols-3">
+          <CultureCard
+            title="How we think"
+            icon="🧠"
+            text="We value clarity over complexity. Decisions are guided by user needs, long-term impact, and clean engineering — not hype or shortcuts."
+          />
+          <CultureCard
+            title="How we work"
+            icon="🤝"
+            text="Ownership, collaboration, and respectful feedback define our workflow. We trust each other and optimize for learning, not ego."
+          />
+          <CultureCard
+            title="Growth mindset"
+            icon="🌱"
+            text="Great products come from people who keep improving. Curiosity, experimentation, and reflection are encouraged at every stage."
+          />
+        </section>
 
-          <div>
-            <h3 className="text-xl font-semibold mb-3 text-gray-900">
-              🤝 How we work
-            </h3>
-            <p className="text-gray-600 leading-relaxed">
-              Collaboration, ownership, and respectful feedback define our
-              workflow. We trust each other and optimize for learning, not ego.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-semibold mb-3 text-gray-900">
-              🌱 Growth mindset
-            </h3>
-            <p className="text-gray-600 leading-relaxed">
-              We believe great products come from people who keep improving.
-              Curiosity, experimentation, and reflection are encouraged at every
-              stage.
-            </p>
-          </div>
-        </div>
-
-        {/* Open roles */}
-        <div className="mt-20 max-w-2xl">
+        {/* OPEN ROLES */}
+        <section className="mt-24 max-w-2xl">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
             Open positions
           </h2>
 
-          <p className="text-gray-600 mb-6">
-            We’re not actively hiring right now, but we’re always happy to
-            connect with passionate builders, designers, and problem-solvers.
+          <p className="text-gray-600 mb-8">
+            We’re not actively hiring at the moment, but we’re always happy to
+            connect with thoughtful builders, designers, and problem-solvers.
           </p>
 
-          <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-            <p className="text-gray-800 font-medium">
-              Interested in joining GuideHub?
-            </p>
-            <p className="text-gray-600 mt-1">
-              Send your portfolio, GitHub, or a short note about yourself — we’d
-              love to hear from you.
+          <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+            <h3 className="text-lg font-semibold text-gray-900">
+              Interested in GuideHub?
+            </h3>
+
+            <p className="mt-2 text-gray-600">
+              Share your portfolio, GitHub, or a short note about what excites
+              you. If there’s a fit, we’ll reach out.
             </p>
 
             <a
               href="mailto:careers@guidehub.app"
-              className="inline-block mt-4 rounded-md bg-gray-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800 transition"
+              className="inline-flex items-center justify-center mt-6 rounded-md bg-indigo-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 transition"
             >
-              Reach out
+              Contact us
             </a>
           </div>
-        </div>
+        </section>
       </div>
+    </div>
+  );
+}
+
+/* ---------------------------------------
+   Components
+---------------------------------------- */
+
+function CultureCard({
+  title,
+  icon,
+  text,
+}: {
+  title: string;
+  icon: string;
+  text: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+      <div className="flex items-center gap-3 mb-4">
+        <span className="text-2xl">{icon}</span>
+        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+      </div>
+
+      <p className="text-gray-600 leading-relaxed">{text}</p>
     </div>
   );
 }

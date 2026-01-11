@@ -6,30 +6,22 @@ import Image from "next/image";
 
 export type Guide = {
   id: string;
+  slug: string;
   name: string;
-  location?: string;
-  rating?: number;
-  img?: string;
-  isTop?: boolean;
-  specialty?: string; // optional short line (e.g., "History & food tours")
-};
 
-/** Deterministic pseudo-random reviews count based on id string.
- *  Produces a stable integer in [10, 130] so we avoid Math.random() in render.
- */
-function getReviewsCount(id: string | undefined) {
-  if (!id) return 24;
-  // simple hash (djb2 variant)
-  let hash = 5381;
-  for (let i = 0; i < id.length; i++) {
-    hash = (hash * 33) ^ id.charCodeAt(i);
-  }
-  // normalize to positive
-  hash = Math.abs(hash);
-  const min = 10;
-  const max = 130;
-  return (hash % (max - min + 1)) + min;
-}
+  city?: string;
+  country?: string;
+
+  rating?: number;
+  reviewCount?: number;
+  isVerified?: boolean;
+
+  coverImage?: string;
+  avatar?: string;
+
+  specialty?: string;
+  isTop?: boolean;
+};
 
 function Stars({ value = 0 }: { value?: number }) {
   const full = Math.floor(value);
@@ -62,10 +54,15 @@ function Stars({ value = 0 }: { value?: number }) {
 
 export default function ProfileCard({
   id,
+  slug,
   name,
-  location,
+  city,
+  country,
   rating = 0,
-  img,
+  reviewCount = 0,
+  isVerified = false,
+  coverImage,
+  avatar,
   isTop = false,
   specialty,
 }: Guide) {
@@ -77,8 +74,6 @@ export default function ProfileCard({
     .join("")
     .toUpperCase();
 
-  const reviewsCount = getReviewsCount(id);
-
   return (
     <article
       className="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow transform hover:-translate-y-0.5 focus-within:-translate-y-0.5 border border-gray-100 dark:border-gray-800"
@@ -86,22 +81,31 @@ export default function ProfileCard({
       role="article"
     >
       {/* Image / visual */}
-      <div className="relative h-44 bg-gray-50 dark:bg-gray-800">
-        {img ? (
-          // NOTE: add external domains to next.config.js images.domains if needed
+      <div className="relative w-full aspect-4/3 bg-gray-50">
+        {coverImage ? (
           <Image
-            src={img}
+            src={coverImage}
             alt={`${name} profile`}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover"
+            className="object-cover object-center"
             priority={false}
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
-            <div className="w-20 h-20 rounded-lg bg-linear-to-br from-indigo-600 to-pink-500 flex items-center justify-center text-white font-semibold text-xl">
-              {initials}
-            </div>
+            {avatar ? (
+              <Image
+                src={avatar}
+                alt={`${name} avatar`}
+                width={80}
+                height={80}
+                className="rounded-lg object-cover"
+              />
+            ) : (
+              <div className="w-20 h-20 rounded-lg bg-linear-to-br from-indigo-600 to-pink-500 flex items-center justify-center text-white font-semibold text-xl">
+                {initials}
+              </div>
+            )}
           </div>
         )}
 
@@ -114,17 +118,27 @@ export default function ProfileCard({
 
       {/* Content */}
       <div className="p-4 sm:p-5">
-        <h3
-          id={`guide-${id}-name`}
-          className="text-lg font-semibold text-gray-900 dark:text-white truncate"
-        >
-          {name}
-        </h3>
+        <div className="flex items-center gap-2">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
+            {name}
+          </h3>
+
+          {isVerified && (
+            <span
+              title="Verified guide"
+              className="text-xs font-medium text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full"
+            >
+              Verified
+            </span>
+          )}
+        </div>
 
         {/* Location + specialty */}
         <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-          {location}
+          {city}
+          {country ? `, ${country}` : ""}
         </div>
+
         {specialty && (
           <div className="mt-2 text-sm text-gray-700 dark:text-gray-300">
             {specialty}
@@ -140,13 +154,13 @@ export default function ProfileCard({
             </div>
             <div className="text-xs text-gray-400">•</div>
             <div className="text-xs text-gray-500 dark:text-gray-400">
-              {reviewsCount} reviews
+              {reviewCount} reviews
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <Link
-              href={`/profile/${id}`}
+              href={`/guides/${slug}`}
               className="inline-flex items-center justify-center px-3 py-1 rounded-md text-sm font-medium border border-indigo-100 text-indigo-700 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-300"
               aria-label={`View profile of ${name}`}
             >
