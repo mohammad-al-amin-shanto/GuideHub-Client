@@ -7,7 +7,8 @@ type Props = {
   title: string;
   subtitle?: string;
   price?: number;
-  duration?: string;
+  days?: number;
+  hours?: number;
   img?: string;
 };
 
@@ -16,7 +17,8 @@ export default function ListingCard({
   title,
   subtitle,
   price,
-  duration,
+  days,
+  hours,
   img = "/images/listing-placeholder.jpg",
 }: Props) {
   return (
@@ -26,14 +28,21 @@ export default function ListingCard({
     >
       <div className="relative h-44">
         <Image src={img} alt={title} fill className="object-cover" />
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 p-3 text-white">
+        <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/60 p-3 text-white">
           <h3 className="font-semibold">{title}</h3>
           <p className="text-sm">{subtitle}</p>
         </div>
       </div>
 
       <div className="p-3 flex items-center justify-between text-sm">
-        <div>{duration ?? "2-3 hrs"}</div>
+        <div>
+          {days
+            ? `${days} day${days > 1 ? "s" : ""}`
+            : hours
+            ? `${hours} hrs`
+            : "Flexible"}
+        </div>
+
         <div className="font-semibold">${price ?? "20"}</div>
       </div>
     </Link>

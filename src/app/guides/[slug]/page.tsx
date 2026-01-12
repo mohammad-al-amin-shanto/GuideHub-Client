@@ -24,26 +24,25 @@ type GuideDetails = {
   isVerified?: boolean;
   tags?: string[];
   languages?: string[];
-  areasCovered?: string[];
+  areasCovered?: {
+    name: string;
+    lat: number;
+    lng: number;
+    visitTime: number;
+  }[];
+  tourStats?: {
+    totalKm: number;
+    travelHours: number;
+    visitHours: number;
+    totalHours: number;
+    recommendedDays: number;
+  };
 };
 
 export default function GuideDetailsPage() {
   const { slug } = useParams<{ slug: string }>();
   const [guide, setGuide] = useState<GuideDetails | null>(null);
   const [loading, setLoading] = useState(true);
-
-  const routePath = guide?.areasCovered?.length
-    ? guide.areasCovered.join(" → ")
-    : "Custom route based on your preferences";
-
-  // Duration based on how many areas the guide covers
-  const duration = guide?.areasCovered?.length
-    ? guide.areasCovered.length <= 3
-      ? "2–3 hours"
-      : guide.areasCovered.length <= 5
-      ? "4–5 hours"
-      : "Full-day experience (6–8 hours)"
-    : "Flexible";
 
   useEffect(() => {
     async function loadGuide() {
@@ -200,10 +199,10 @@ export default function GuideDetailsPage() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {guide.areasCovered.map((area) => (
                     <div
-                      key={area}
+                      key={area.name}
                       className="rounded-xl bg-gray-50 px-4 py-3 text-sm font-medium text-gray-800"
                     >
-                      📍 {area}
+                      📍 {area.name}
                     </div>
                   ))}
                 </div>
@@ -217,12 +216,21 @@ export default function GuideDetailsPage() {
                 <p className="text-xs uppercase tracking-wide text-gray-500">
                   Duration
                 </p>
+
                 <p className="mt-2 text-lg font-semibold text-gray-900">
-                  {duration}
+                  {guide.tourStats
+                    ? `${guide.tourStats.recommendedDays} day${
+                        guide.tourStats.recommendedDays > 1 ? "s" : ""
+                      }`
+                    : "Flexible"}
                 </p>
-                <p className="mt-1 text-sm text-gray-500">
-                  Based on number of locations covered
-                </p>
+
+                {guide.tourStats && (
+                  <p className="mt-1 text-sm text-gray-500">
+                    {guide.tourStats.totalHours} hours ·{" "}
+                    {guide.tourStats.totalKm} km
+                  </p>
+                )}
               </div>
 
               {/* Route */}
@@ -231,7 +239,7 @@ export default function GuideDetailsPage() {
                   Route
                 </p>
                 <p className="mt-2 text-sm font-medium text-gray-900 leading-relaxed">
-                  {routePath}
+                  {guide.areasCovered?.map((a) => a.name).join(" → ")}
                 </p>
                 <p className="mt-1 text-sm text-gray-500">
                   Optimized for walking & sightseeing

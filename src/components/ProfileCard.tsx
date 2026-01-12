@@ -21,6 +21,13 @@ export type Guide = {
 
   specialty?: string;
   isTop?: boolean;
+  tourStats?: {
+    totalKm: number;
+    travelHours: number;
+    visitHours: number;
+    totalHours: number;
+    recommendedDays: number;
+  };
 };
 
 function Stars({ value = 0 }: { value?: number }) {
@@ -65,6 +72,7 @@ export default function ProfileCard({
   avatar,
   isTop = false,
   specialty,
+  tourStats,
 }: Guide) {
   // generate initials (for fallback avatar)
   const initials = name
@@ -142,6 +150,14 @@ export default function ProfileCard({
         {specialty && (
           <div className="mt-2 text-sm text-gray-700 dark:text-gray-300">
             {specialty}
+          </div>
+        )}
+
+        {tourStats && (
+          <div className="mt-2 text-xs text-gray-500">
+            {tourStats.recommendedDays} day
+            {tourStats.recommendedDays > 1 ? "s" : ""} · {tourStats.totalHours}{" "}
+            hrs · {tourStats.totalKm} km
           </div>
         )}
 

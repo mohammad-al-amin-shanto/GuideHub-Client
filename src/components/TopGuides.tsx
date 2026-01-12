@@ -9,18 +9,22 @@ type GuideFromApi = {
   _id: string;
   slug: string;
   name: string;
-
   city?: string;
   country?: string;
-
   rating?: number;
   reviewCount?: number;
   isVerified?: boolean;
-
   coverImage?: string;
   avatar?: string;
-
   specialty?: string;
+
+  tourStats?: {
+    totalKm: number;
+    travelHours: number;
+    visitHours: number;
+    totalHours: number;
+    recommendedDays: number;
+  };
 };
 
 export default function TopGuides() {
@@ -37,19 +41,17 @@ export default function TopGuides() {
             id: g._id,
             slug: g.slug,
             name: g.name,
-
             city: g.city,
             country: g.country,
-
             rating: g.rating ?? 0,
             reviewCount: g.reviewCount,
             isVerified: g.isVerified,
-
             coverImage: g.coverImage,
             avatar: g.avatar,
-
             specialty: g.specialty,
+            tourStats: g.tourStats,
           }))
+
           .sort((a, b) => b.rating - a.rating)
           .slice(0, 3);
 
