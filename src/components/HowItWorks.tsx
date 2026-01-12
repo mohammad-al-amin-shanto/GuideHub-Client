@@ -6,14 +6,17 @@ const steps = [
   {
     title: "Find your experience",
     desc: "Search by city or activity to discover unique tours hosted by real local experts.",
+    icon: "🔍",
   },
   {
     title: "Choose your guide",
     desc: "Check profiles, see ratings, and pick the guide who fits your vibe and budget.",
+    icon: "🧭",
   },
   {
     title: "Book with confidence",
     desc: "Send a request, chat with your guide, and get ready for an authentic local adventure.",
+    icon: "📅",
   },
 ];
 
@@ -26,38 +29,37 @@ export default function HowItWorks() {
         {steps.map((s, i) => (
           <div
             key={s.title}
-            role="article"
-            aria-labelledby={`how-step-${i}-title`}
-            tabIndex={0}
-            className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow focus-within:shadow-md focus-within:ring-2 focus-within:ring-indigo-200 dark:focus-within:ring-indigo-700 outline-none"
+            className="relative rounded-2xl border border-gray-200/60 dark:border-gray-700 
+             bg-linear-to-br from-white via-indigo-50/40 to-white 
+             dark:from-gray-900 dark:via-gray-800 dark:to-gray-900
+             shadow-[0_10px_25px_-10px_rgba(79,70,229,0.15)]
+             hover:shadow-[0_20px_40px_-15px_rgba(79,70,229,0.25)]
+             transition-all hover:-translate-y-1 p-7"
           >
-            <div className="flex items-center gap-4">
-              <div
-                aria-hidden
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-600 text-white font-bold shadow-sm"
-              >
-                {i + 1}
+            {/* Icon + step */}
+            <div className="flex items-center gap-4 mb-5">
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl">
+                {s.icon}
               </div>
 
-              <h3
-                id={`how-step-${i}-title`}
-                className="font-semibold text-gray-900 dark:text-white text-base"
-              >
-                {s.title}
-              </h3>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600">
+                  Step {i + 1}
+                </p>
+                <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                  {s.title}
+                </h3>
+              </div>
             </div>
 
-            <p className="mt-3 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+            {/* Description */}
+            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
               {s.desc}
             </p>
 
-            <div className="mt-4">
-              <button
-                type="button"
-                className="inline-flex items-center gap-2 text-xs font-medium text-indigo-600 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-300 rounded"
-                aria-label={`Learn more about: ${s.title}`}
-                onClick={() => {}}
-              >
+            {/* CTA */}
+            <div className="mt-5">
+              <span className="inline-flex items-center gap-2 text-xs font-medium text-indigo-600">
                 Learn more
                 <svg
                   className="w-3 h-3"
@@ -73,7 +75,7 @@ export default function HowItWorks() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </button>
+              </span>
             </div>
           </div>
         ))}
