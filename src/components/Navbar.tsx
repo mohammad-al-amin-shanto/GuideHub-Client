@@ -10,6 +10,8 @@ export default function Navbar() {
   const router = useRouter();
   const { user, loading, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
@@ -45,8 +47,15 @@ export default function Navbar() {
           LocalGuide
         </Link>
 
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="md:hidden p-2 rounded-md border border-gray-300"
+        >
+          ☰
+        </button>
+
         {/* Right Side */}
-        <div className="flex gap-4 items-center relative">
+        <div className="hidden md:flex gap-4 items-center relative">
           {/* Always visible */}
           <Link href="/explore" className={linkClass(isActive("/explore"))}>
             Explore Tours
@@ -174,6 +183,127 @@ export default function Navbar() {
           )}
         </div>
       </div>
+
+      {mobileOpen && (
+        <div className="md:hidden fixed inset-x-0 top-16 z-40 bg-white shadow-xl border-t">
+          <div className="px-4 py-5 space-y-6">
+            {/* Top quick actions */}
+            <div className="grid grid-cols-2 gap-3">
+              <Link
+                href="/explore"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-center gap-2 rounded-xl bg-indigo-600 text-white py-3 font-semibold"
+              >
+                🌍 Explore Tours
+              </Link>
+
+              {!user && (
+                <Link
+                  href="/register"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-center gap-2 rounded-xl border border-indigo-600 text-indigo-600 py-3 font-semibold"
+                >
+                  🧭 Become a Guide
+                </Link>
+              )}
+            </div>
+
+            {/* User section */}
+            {user && (
+              <div className="rounded-2xl bg-gray-50 p-4 space-y-3">
+                <p className="text-xs uppercase tracking-wide text-gray-500">
+                  Account
+                </p>
+
+                {user.role === "tourist" && (
+                  <Link
+                    href="/dashboard/tourist"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-white"
+                  >
+                    📅 My Bookings
+                  </Link>
+                )}
+
+                {user.role === "guide" && (
+                  <>
+                    <Link
+                      href="/dashboard/guide"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-white"
+                    >
+                      🧑‍💼 Guide Dashboard
+                    </Link>
+                    <Link
+                      href="/dashboard/listings"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-white"
+                    >
+                      📍 My Listings
+                    </Link>
+                  </>
+                )}
+
+                {user.role === "admin" && (
+                  <Link
+                    href="/dashboard/admin"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-white"
+                  >
+                    🛠 Admin Dashboard
+                  </Link>
+                )}
+
+                <Link
+                  href={`/profile/${user.id}`}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-white"
+                >
+                  👤 Profile
+                </Link>
+              </div>
+            )}
+
+            {/* Auth section */}
+            {!user && (
+              <div className="rounded-2xl bg-gray-50 p-4 space-y-3">
+                <p className="text-xs uppercase tracking-wide text-gray-500">
+                  Account
+                </p>
+
+                <Link
+                  href="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-white"
+                >
+                  🔐 Login
+                </Link>
+
+                <Link
+                  href="/register"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-white"
+                >
+                  ✨ Create Account
+                </Link>
+              </div>
+            )}
+
+            {/* Logout */}
+            {user && (
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  logout().then(() => router.push("/"));
+                }}
+                className="w-full flex items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 text-red-600 py-3 font-semibold"
+              >
+                🚪 Logout
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
