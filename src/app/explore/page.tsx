@@ -172,7 +172,7 @@ export default function ExplorePage(): JSX.Element {
               >
                 <div className="flex items-start gap-4">
                   <div
-                    className="flex-shrink-0 w-14 h-14 rounded-lg flex items-center justify-center text-white font-semibold text-lg"
+                    className="shrink-0 w-14 h-14 rounded-lg flex items-center justify-center text-white font-semibold text-lg"
                     style={{
                       background:
                         "linear-gradient(135deg, rgba(99,102,241,1) 0%, rgba(79,70,229,1) 100%)",

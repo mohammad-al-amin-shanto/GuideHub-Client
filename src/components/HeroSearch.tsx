@@ -60,7 +60,7 @@ export default function HeroSearch() {
             Search destinations, guides, or tags
           </span>
 
-          <div className="bg-white rounded-lg p-2 flex items-center gap-2 shadow-md transition-shadow duration-150 hover:shadow-lg">
+          <div className="bg-white rounded-lg p-2 flex flex-col sm:flex-row sm:items-center gap-2 shadow-md transition-shadow duration-150 hover:shadow-lg">
             {/* Location icon */}
             <div className="px-2 flex items-center text-gray-400" aria-hidden>
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
@@ -101,7 +101,7 @@ export default function HeroSearch() {
               }}
               aria-label="Where are you going?"
               placeholder="Where are you going? (e.g. Dhaka, Cox's Bazar)"
-              className="flex-1 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none
+              className="w-full sm:flex-1 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none
                          focus:ring-2 focus:ring-indigo-500 transition-colors
                          caret-indigo-600"
             />
@@ -134,12 +134,12 @@ export default function HeroSearch() {
               </button>
             ) : null}
 
-            <div className="border-l h-8 border-gray-200" />
+            <div className="hidden sm:block border-l h-8 border-gray-200" />
 
             {/* Search button */}
             <button
               type="submit"
-              className="ml-2 px-4 py-2 rounded-md bg-indigo-600 text-white font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              className="w-full sm:w-auto ml-0 sm:ml-2 px-4 py-2 rounded-md bg-indigo-600 text-white font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300"
               aria-label="Search"
             >
               Search
